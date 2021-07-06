@@ -5,10 +5,21 @@ import * as path from 'path';
 import * as url from 'url';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { BrowserWindow, app } from 'electron';
+import installExtension, {
+  REACT_DEVELOPER_TOOLS,
+} from 'electron-devtools-installer';
 
 let mainWindow: Electron.BrowserWindow | null;
 
 async function createWindow(): Promise<void> {
+  if (process.env.NODE_ENV !== 'production') {
+    await installExtension(REACT_DEVELOPER_TOOLS)
+      .then((name: string) => console.log(`Added Extension:  ${name}`))
+      .catch((err: PromiseRejectionEvent) =>
+        console.log('An error occurred: ', err)
+      );
+  }
+
   // Create the browser window.
   mainWindow = new BrowserWindow({
     height: 600,
@@ -22,7 +33,7 @@ async function createWindow(): Promise<void> {
   });
 
   // and load the index.html of the app.
-  if (process.env.NODE_ENV === 'development') {
+  if (process.env.NODE_ENV !== 'production') {
     await mainWindow.loadURL('http://localhost:4000');
     mainWindow.webContents.openDevTools();
   } else {
