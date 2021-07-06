@@ -1,14 +1,16 @@
 # Electron-React-TypeScript-Webpack-Boilerplate
-Pre-configured Electron.js + React.js + TypeScript boilerplate with 
+
+Pre-configured Electron.js + React.js + TypeScript boilerplate with
 Webpack v5 & linters config predefined.
 
-This boilerplate currently works on macOS and Windows. If something doesn't 
+This boilerplate currently works on macOS and Windows. If something doesn't
 work, please [file an issue](https://github.com/Devtography/electron-react-typescript-webpack-boilerplate/issues/new).
 
 ## Getting started
+
 ```sh
 // execute
-git clone https://github.com/iamWing/electron-react-typescript-base-proj.git
+git clone https://github.com/RealDyllon/electron-react-typescript-webpack-boilerplate.git your-project-name
 ```
 
 ```json
@@ -32,76 +34,82 @@ git clone https://github.com/iamWing/electron-react-typescript-base-proj.git
 ```
 
 Then install all the `node_modules` needed by executing the following command:
+
 ```sh
-cd folder-containing-the-cloned-boilerplate
-npm install --also-dev
+cd your-project-name
+yarn install
 ```
 
-Finally execute the following command to start Webpack in development mode and 
+Finally execute the following command to start Webpack in development mode and
 watch the changes on source files for live rebuild on code changes.
-```sh
-npm run dev
-```
 
-The `npm run dev` command won't start your app and get your app shows on the 
-screen. To start your app, execute the following command:
 ```sh
-npm start
+yarn quickstart
 ```
 
 ## Building the installer for your Electron app
-The boilerplate is currently configured to package & build the installer of 
-your app for macOS & Windows using `electron-builder`. 
+
+The boilerplate is currently configured to package & build the installer of
+your app for macOS & Windows using `electron-builder`.
+
+To build for all supported Operating Systems:
+
+```sh
+yarn quickbuild
+```
 
 For macOS, execute:
+
 ```sh
-npm run prod
-npm run build:mac
+yarn build:mac
 ```
 
 For Windows, execute:
+
 ```sh
-npm run prod
-npm run build:win
+yarn build:win
 ```
-_**`asar` archiving may cause errors while running the installed Electron app 
-based on pervious experiences, whereas the macOS build with `asar` enabled 
+
+_**`asar` archiving may cause errors while running the installed Electron app
+based on pervious experiences, whereas the macOS build with `asar` enabled
 works just fine. You can turn it off by changing `asar` to `false` in
 `package.json` line 26.**_
 
 ### Extra options
-The build scripts are pre-configured to build 64 bit installers since 64 bit 
-should be the standard for a modern applications. 32 bit builds are still 
+
+The build scripts are pre-configured to build 64 bit installers since 64 bit
+should be the standard for a modern applications. 32 bit builds are still
 possible by changing the build scripts in `package.json` as below:
+
 ```json
 // from
 "scripts": {
     ...
-    "build:win": "electron-builder build --win --x64",
-    "build:mac": "electron-builder build --mac --x64"
+    "build:win": "yarn run build:common --win --x64",
+    "build:mac": "yarn run build:common --mac --x64"
 },
 
 // to
 "scripts": {
     ...
-    "build:win": "electron-builder build --win --ia32",
+    "build:win": "yarn run build:common --win --ia32",
     // Works only on macOS version < 10.15
-    "build:mac": "electron-builder build --mac --ia32"
+    "build:mac": "yarn run build:common --mac --ia32"
 },
 ```
 
-Builds for Linux, armv71, and arm64 can also be configured by modifying the 
-build scripts in `package.json`, but those aren't tested yet. For details, 
+Builds for Linux, armv71, and arm64 can also be configured by modifying the
+build scripts in `package.json`, but those aren't tested yet. For details,
 please refer to [documents of `electron-builder`](https://www.electron.build/cli).
 
 ## Known issues
+
 1. As Apple introduced the [notarization requirements] with the public release
    of `macOS 10.14.5`, apps built for `macOS` are now needed to be signed with
    a valid Developer ID certificate and let Apple notarizes it for you. This
    boilerplate doesn't include the notarization setup as of the `3.0.0` release,
    but up until now, you should still be able to run your Electron app by
-   allowing your app to be opened in `System Preferences -> Security & Privacy
-   -> General` without notarizing it for still (tested on `macOS 11.1`).
+   allowing your app to be opened in `System Preferences -> Security & Privacy -> General` without notarizing it for still (tested on `macOS 11.1`).
 
    If you want to notarization your app using this boilerplate before those
    settings are included in the future updates, you can try follow the guides on
@@ -113,8 +121,14 @@ please refer to [documents of `electron-builder`](https://www.electron.build/cli
    support building the universal binary yet.
 
 ## Folder structure
+
 ```
 electron-react-typescript-base-proj/
+| - config/             //- Configs for webpack and electron-builder
+| | - electron-builder.json
+| | - webpack.config.base.js
+| | - webpack.config.main.js
+| | - webpack.config.renderer.js
 | - dist/               //- Generated by Webpack automatically
 | - node_modules/
 | - out/                //- Generated by build script automatically
@@ -134,19 +148,16 @@ electron-react-typescript-base-proj/
 | - package-lock.json
 | - package.json
 | - tsconfig.json       //- TypeScript config
-| - webpack.config.js   //- Webpack config
 ```
 
-## Author
+## Authors
+
+[Dyllon](https://dyllon.dev) [@RealDyllon](https://github.com/RealDyllon)
 [Wing Chau](https://github.com/iamWing) [@Devtography](https://github.com/Devtography)
 
-## Donation
-I do this open source work for free in my free time. If you'd like me to invest
-more time on it, please consider give me some [donations]. Any donation is
-gonna be a great motivation for me.
-
 ## License
-Electron React TypeScript Webpack Boilerplate is open source software 
+
+Electron React TypeScript Webpack Boilerplate is open source software
 [licensed as MIT](LICENSE).
 
 [notarization requirements]: https://developer.apple.com/news/?id=04102019a
