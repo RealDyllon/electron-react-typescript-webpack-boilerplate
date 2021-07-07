@@ -3,6 +3,7 @@
     "allowSyntheticDefaultImports": true,
     "jsx": "react",
     "baseUrl": ".",
+    "esModuleInterop": true,
     "paths": {
       "_/*": ["src/*"],
       "_public/*": ["public/*"],
