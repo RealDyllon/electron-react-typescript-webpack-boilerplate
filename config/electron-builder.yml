@@ -1,5 +1,5 @@
 appId: com.dyllon.app
-productName: Hexapod
+productName: ElectronApp
 publish: null
 directories:
   app: ./dist/
